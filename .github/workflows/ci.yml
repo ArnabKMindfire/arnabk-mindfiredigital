@@ -3,13 +3,17 @@ name: Continuous Integration Workflow
 on:
   push:
     branches:
-      - dev
+      - experiment-github-actions
   workflow_dispatch:
 
 jobs:
   build:
     name: "Build Mindfire FOSS application"
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      metadata: read
+      packages: read
     steps:
       - name: "Checkout repository"
         uses: actions/checkout@v2
