@@ -52,7 +52,7 @@ jobs:
       #     git config user.email "${{ github.actor }}@users.noreply.github.com"
 
       - name: Copy Build Artifacts to gh-pages Branch
-        run: cp -r build/* .
+        run: cp -r docs/* .
 
       - name: Commit and Push to gh-pages
         run: |
