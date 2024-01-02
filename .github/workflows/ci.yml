@@ -28,9 +28,35 @@ jobs:
       - name: 'Build application'
         run: npm run build
 
-      - name: Commit changes
-        uses: EndBug/add-and-commit@v9
-        with:
-          default_author: github_actions
-          message: 'build: build application'
-          fetch: false
+      # - name: Commit changes
+      #   uses: EndBug/add-and-commit@v9
+      #   with:
+      #     default_author: github_actions
+      #     message: 'build: build application'
+      #     fetch: false
+
+  deploy:
+    name: 'Copy build files in gh-pages branch'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: read
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      # - name: Set up Git
+      #   run: |
+      #     git config user.name "${{ github.actor }}"
+      #     git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+      - name: Copy Build Artifacts to gh-pages Branch
+        run: cp -r build/* .
+
+      - name: Commit and Push to gh-pages
+        run: |
+          git checkout -b gh-pages
+          git add .
+          git commit -m "Deployed from main branch"
+          git push origin gh-pages
